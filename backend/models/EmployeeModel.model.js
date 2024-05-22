@@ -20,5 +20,5 @@ const EmployeeSchema =mongoose.Schema({
     }
 })
 
-const EmployeeModel=mongoose("employee",EmployeeSchema)
+const EmployeeModel=mongoose.model("employee",EmployeeSchema)
 module.exports=EmployeeModel
