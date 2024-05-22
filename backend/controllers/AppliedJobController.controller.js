@@ -1,4 +1,4 @@
-const AppliedJobModel=reqiure('../models/AppliedJobModel.js')
+const AppliedJobModel=require('../models/AppliedJobModel.model')
 
 async function showJobs(req,res){
     const jobs=await AppliedJobModel.find({});
