@@ -2,11 +2,11 @@ const mongoose=require('mongoose');
 const LoginSchema =mongoose.Schema({
     empid:{
         type:String,
-        require:true
+        required:true
     },
     password:{
         type:String,
-        require:true
+        required:true
     }
 })
 

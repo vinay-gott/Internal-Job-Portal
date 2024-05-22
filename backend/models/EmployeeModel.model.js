@@ -2,21 +2,21 @@ const mongoose=require('mongoose');
 const EmployeeSchema =mongoose.Schema({
     email:{
         type:String,
-        require:true
+        required:true
     },
     password:{
         type:String,
-        require:true
+        required:true
     },
     empId:{
         type:String,
-        require:true
+        required:true
     },
-    mobileNumber:String,
-    department:boolean,
+    mobileNumber:{type:String},
+    department:{type:Boolean},
     role:{
         type:String,
-        require:true
+        required:true
     }
 })
 
