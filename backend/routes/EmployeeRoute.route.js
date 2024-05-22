@@ -1,4 +1,6 @@
 const express=require('express')
+const app = express();
+app.use(express.json());
 const EmployeeRoutes=express.Router()
 EmployeeRoutes.use(express.json())
 // const EmployeeModel=require('../models/EmployeeModel.model')
