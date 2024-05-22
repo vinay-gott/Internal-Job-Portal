@@ -17,7 +17,7 @@ async function getEmployeeById(req,res){
 }
 
 async function editEmployee(req,res){
-    const emp=await EmployeeModel.findByIdAndUpdate(req.params.id,req.body);
+    const emp=await EmployeeModel.findByIdAndUpdate(req.body.id,req.body);
     res.status(200).send(emp)
 
 }
