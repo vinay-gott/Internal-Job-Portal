@@ -1,10 +1,9 @@
-const mongoose=require("mongoose")
+const mongoose = require('mongoose')
 
-
-const AppliedJobSchema=mongoose.schema({
-    jobId:{type:String},
-    employeeId:{type:String},
-    appliedDate:{type:Date},
+const AppliedJobSchema=mongoose.Schema({
+    _jobId:{type:Number},
+    empId:{type:String},
+    appliedDate:{type:Date}
 
 })
 

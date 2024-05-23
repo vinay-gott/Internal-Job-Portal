@@ -1,13 +1,21 @@
 const express=require("express");
-
-const JobController=require("../controllers/JobController.controller")
 const JobRoute=express.Router()
+JobRoute.use(express.json())
+JobRoute.use(express.urlencoded({ extended: true }));
 
-JobRoute.get("/hr",JobController.getJobs)
-JobRoute.delete("/hr/delete/:id",JobController.jobDelete)
-JobRoute.get("/hr/jobEdit/:id",JobController.jobEditData)
-JobRoute.put("/hr/jobEdit/:id",JobController.jobEditSave)
-JobRoute.post("/hr/jobSave",JobController.jobSave)
+//const JobModel=require("../models/JobModel.model")
+var jr=require("../controllers/JobController.controller")
+
+
+JobRoute.get("/hr",jr.getJobs)
+JobRoute.delete("/hr/delete/:id",jr.jobDelete)
+JobRoute.get("/hr/jobEdit/:id",jr.jobEditData)
+JobRoute.put("/hr/jobEdit/:id",jr.jobEditSave)
+JobRoute.post("/hr/jobSave",jr.jobSave)
+
+
+
+module.exports=JobRoute
 
 
 
