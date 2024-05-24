@@ -21,12 +21,12 @@ app.get('/', (req, res) => {
 });
 
 // Set base endpoint for all routes
-//app.use('/login', loginRoute);
+app.use('/login',loginRoute);
 app.use("/signup",signupRoute)
 app.use('/job',jobRoute);
-app.use('/hr', HrRoute);
-app.use('/appliedjobs', appliedJobRoute)
-app.use('/admin',AdminRoute)
+app.use('/hr',HrRoute);
+app.use('/appliedjobs',appliedJobRoute)
+//app.use('/admin',AdminRoute)
 
 
 const PORT = process.env.PORT || 3128;

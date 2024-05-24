@@ -12,7 +12,7 @@ async function showJobs(req,res){
 async function allAppliedJobs(req,res){
     const jobs=await AppliedJobModel.find({});
     if(!jobs)
-        res.status(404).send({msg:"Error finding jobs"})
+        res.status(404).send({msg:"Error finding applied jobs"})
     else
         res.status(200).send(jobs);
 }
@@ -20,14 +20,18 @@ async function allAppliedJobs(req,res){
 
 async function jobMapping(req,res){
     try{
-
+            const appJobs=await AppliedJobModel.find({empId:req.body.empId})
+            if(appJobs.length>=2)
+                return res.status(400).send("You have reached max jobs limit")
+            else{
             let appliedjob=new AppliedJobModel({
-            _jobId:req.body._jobId,
-            employeeId:req.body.employeeId,
-            appliedDate:new Date()
-            });
+                    _jobId:req.body._jobId,
+                    employeeId:req.body.employeeId,
+                    appliedDate:new Date()
+                });
             await appliedjob.save();
-            res.status(200).send("Inserted the applicat1ion")
+            res.status(200).send("Inserted the application")
+            }
 
         }catch(err){
             console.log("There is a error in input details "+err)
