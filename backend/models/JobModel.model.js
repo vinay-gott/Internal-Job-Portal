@@ -14,6 +14,6 @@ const JobSchema=mongoose.Schema({
 
 })
 
-const JobModel=mongoose.model("JobModel",JobSchema)
+const JobModel=mongoose.model("jobModel",JobSchema)
 
 module.exports=JobModel

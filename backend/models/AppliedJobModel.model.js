@@ -8,6 +8,6 @@ const AppliedJobSchema=mongoose.Schema({
 
 })
 
-const AppliedJobModel=mongoose.model("AppliedJobModel",AppliedJobSchema)
+const AppliedJobModel=mongoose.model("appliedJob",AppliedJobSchema)
 
 module.exports=AppliedJobModel

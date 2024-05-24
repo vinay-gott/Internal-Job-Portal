@@ -4,9 +4,7 @@ const mongoose=require("mongoose")
 const jwt=require("jsonwebtoken")
 
 
-
-
-
+const EmployeeModel=require("../models/EmployeeModel.model")
 
 
 async function saveEmployee(req,res){
@@ -15,6 +13,9 @@ async function saveEmployee(req,res){
     if (!email || !password || !mobileNumber||!empId||!department||!role) {
         return res.status(400).send({ message: 'Please fill all the fields' });
     }
+    const roles=["employee","hr","admin"]
+    if(!roles.includes(role))
+        return res.status(400).send({message:"Enter correct details"})
     try{
     const id=req.body.empId
     const emp=await EmployeeModel.findOne({empId:id})
@@ -31,3 +32,5 @@ catch(err){
     console.log({message:err})
 }
 }
+
+module.exports={saveEmployee}
