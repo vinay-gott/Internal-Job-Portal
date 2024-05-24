@@ -17,7 +17,9 @@ const EmployeeSchema =mongoose.Schema({
     department:{type:Boolean},
     role:{
         type:String,
-        required:true
+        required:true,
+        default:'employee',
+    enum:['employee','admin','hr'],
     }
 })
 

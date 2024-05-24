@@ -11,6 +11,7 @@ const loginRoute = require('./routes/LoginRoute.route');
 const jobRoute = require('./routes/JobRoute.route');
 const employeeRoute = require('./routes/EmployeeRoute.route');
 const appliedJobRoute = require('./routes/AppliedJobRoute.route');
+const signupRoute = require('./routes/signUpRoute.route');
 
 app.use(express.json());
 
@@ -20,9 +21,10 @@ app.get('/', (req, res) => {
 
 // Set base endpoint for all routes
 //app.use('/api/login', loginRoute);
+app.use("/api/signup",signupRoute)
 app.use('/api/job',jobRoute);
 app.use('/api/employee', employeeRoute);
-app.use('/api/appliedjob', appliedJobRoute)
+app.use('/api/appliedjobs', appliedJobRoute)
 
 
 const PORT = process.env.PORT || 3128;

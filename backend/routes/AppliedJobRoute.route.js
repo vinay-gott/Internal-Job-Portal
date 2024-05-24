@@ -6,7 +6,7 @@ AppliedJobRoutes.use(express.json())
 const AppliedRouter=require('../controllers/AppliedJobController.controller')
 
 AppliedJobRoutes.get('/:id',AppliedRouter.showJobs)
-AppliedJobRoutes.post('/',AppliedRouter.jobMapping)
-AppliedJobRoutes.delete('/',AppliedRouter.deleteMapping)
+AppliedJobRoutes.post('/home/:id',AppliedRouter.jobMapping)
+AppliedJobRoutes.delete('/delete',AppliedRouter.deleteMapping)
 
 module.exports=AppliedJobRoutes

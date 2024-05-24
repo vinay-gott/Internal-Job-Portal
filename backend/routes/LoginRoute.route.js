@@ -5,6 +5,6 @@ LoginRouter.use(express.json())
 
 const LoginController=require("../controllers/LoginController.controller")
 
-LoginRouter.post("/login",LoginController.checkUser)
+LoginRouter.post("/",LoginController.checkUser)
 
 module.exports=LoginRouter
