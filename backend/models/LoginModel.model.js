@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 const LoginSchema =mongoose.Schema({
-    empid:{
+    empId:{
         type:String,
         required:true
     },

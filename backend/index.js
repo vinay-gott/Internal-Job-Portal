@@ -9,8 +9,10 @@ DBconnection();
 // Import route files
 const loginRoute = require('./routes/LoginRoute.route');
 const jobRoute = require('./routes/JobRoute.route');
-const employeeRoute = require('./routes/EmployeeRoute.route');
+const HrRoute = require('./routes/HrRoute.route');
 const appliedJobRoute = require('./routes/AppliedJobRoute.route');
+const signupRoute = require('./routes/signUpRoute.route');
+const AdminRoute=require('./routes/AdminRoute.route');
 
 app.use(express.json());
 
@@ -19,10 +21,12 @@ app.get('/', (req, res) => {
 });
 
 // Set base endpoint for all routes
-app.use('/api/login', loginRoute);
-app.use('/api/job', jobRoute);
-app.use('/api/employee', employeeRoute);
-app.use('/api/appliedjob', appliedJobRoute)
+//app.use('/login', loginRoute);
+app.use("/signup",signupRoute)
+app.use('/job',jobRoute);
+app.use('/hr', HrRoute);
+app.use('/appliedjobs', appliedJobRoute)
+app.use('/admin',AdminRoute)
 
 
 const PORT = process.env.PORT || 3128;
