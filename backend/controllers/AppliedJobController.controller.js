@@ -4,7 +4,7 @@ async function showJobs(req,res){
     const id=req.params.id;
     const jobs=await AppliedJobModel.find({empId:id});
     if(!jobs)
-        res.status(404).send({msg:"Error finding jobs"})
+        return res.status(404).send({msg:"Error finding jobs"})
     else
         res.status(200).send(jobs);
 }
@@ -12,7 +12,7 @@ async function showJobs(req,res){
 async function allAppliedJobs(req,res){
     const jobs=await AppliedJobModel.find({});
     if(!jobs)
-        res.status(404).send({msg:"Error finding applied jobs"})
+        return res.status(404).send({msg:"Error finding applied jobs"})
     else
         res.status(200).send(jobs);
 }
@@ -42,7 +42,7 @@ async function deleteMapping(req,res){
     try{
         const result=await AppliedJobModel.deleteOne({_jobId:req.body._jobId,empId:req.body.empId});
         if (result.deletedCount === 1) {
-            res.status(200).json({message: 'Job mapping deleted successfully' });
+            return res.status(200).json({message: 'Job mapping deleted successfully' });
             
           } else {
            res.status(404).json({ message: 'Job mapping not found' });
