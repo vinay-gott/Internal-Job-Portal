@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+
 const AppliedJobSchema=mongoose.Schema({
     _jobId:{type:Number},
     empId:{type:String},
