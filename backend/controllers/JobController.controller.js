@@ -1,4 +1,3 @@
-const express=require("express")
 const mongoose=require("mongoose")
 const JobModel=require("../models/JobModel.model")
 
@@ -6,7 +5,7 @@ const getJobs=async (req,res)=>{
 
     const jobs=await JobModel.find({})
     if(!jobs){
-        res.status(404).send({message:"Error finding jobs data"})
+        return res.status(404).send({message:"Error finding jobs data"})
     }
     else
         res.status(200).send(jobs);
@@ -18,7 +17,7 @@ async function getHomeJobs(req,res){
 
     const jobs=await JobModel.find({})
     if(!jobs){
-        res.status(404).send({message:"Error finding jobs data"})
+        return res.status(404).send({message:"Error finding jobs data"})
     }
     else
         res.status(200).send(jobs);
@@ -28,7 +27,7 @@ async function jobEditData(req,res){
     const id=req.params.id;
     const job=await JobModel.findOne({_jobId:id});
     if(!job)
-        res.status(404) .send({message:"Error finding job"})
+        return res.status(404) .send({message:"Error finding job"})
     else
         res.status(200).send(job)
 }
@@ -36,10 +35,10 @@ async function jobEditData(req,res){
 async function jobEditSave(req,res){
     const id=req.params.id;
     if(id!=req.body._jobId)
-        res.send({message:"ID mis-match"})
+        return res.send({message:"ID mis-match"})
     const job=await JobModel.findOne({_jobId:id})
     if(!job){
-        res.status(404).send({message:"Job with this id does not exist"})
+        return res.status(404).send({message:"Job with this id does not exist"})
     }
     else{
         const edit=await JobModel.replaceOne({_jobId:id},req.body);
@@ -55,7 +54,7 @@ async function jobSave(req,res){
     const j=await JobModel.findOne({_jobId:req.body._jobId})
     //console.log(j)
     if(j){
-        res.status(404).send({message :"Job with this id already exists"})
+        return res.status(404).send({message :"Job with this id already exists"})
     }
     else {
         const job=new JobModel(req.body)
@@ -68,7 +67,7 @@ async function jobDelete(req,res){
     //const j=await JobModel.find({})
     const job=await JobModel.findOne({_jobId:req.params.id})
     if(!job){
-        res.status(404).send('Job not found');
+        return res.status(404).send('Job not found');
     }
     else{
         const j=await JobModel.deleteOne({_jobId:req.params.id});

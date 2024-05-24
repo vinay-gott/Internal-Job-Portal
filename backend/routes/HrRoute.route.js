@@ -1,7 +1,5 @@
 const express=require("express");
 const HrRoute=express.Router()
-HrRoute.use(express.json())
-HrRoute.use(express.urlencoded({ extended: true }));
 
 //const JobModel=require("../models/JobModel.model")
 var jr=require("../controllers/JobController.controller")
