@@ -19,8 +19,8 @@ app.get('/', (req, res) => {
 });
 
 // Set base endpoint for all routes
-app.use('/api/login', loginRoute);
-app.use('/api/job', jobRoute);
+//app.use('/api/login', loginRoute);
+app.use('/api/job',jobRoute);
 app.use('/api/employee', employeeRoute);
 app.use('/api/appliedjob', appliedJobRoute)
 
