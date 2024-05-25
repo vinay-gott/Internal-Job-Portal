@@ -15,18 +15,18 @@ const signupRoute = require('./routes/signUpRoute.route');
 const AdminRoute=require('./routes/AdminRoute.route');
 
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
     res.send('API is running');
 });
 
 // Set base endpoint for all routes
-//app.use('/login', loginRoute);
+app.use('/login',loginRoute);
 app.use("/signup",signupRoute)
 app.use('/job',jobRoute);
-app.use('/hr', HrRoute);
-app.use('/appliedjobs', appliedJobRoute)
-app.use('/admin',AdminRoute)
+app.use('/hr',HrRoute);
+app.use('/appliedjobs',appliedJobRoute)
+//app.use('/admin',AdminRoute)
 
 
 const PORT = process.env.PORT || 3128;

@@ -1,11 +1,8 @@
 const express=require('express')
 const signupRoute=express.Router()
 
-signupRoute.use(express.json())
-signupRoute.use(express.urlencoded({ extended: true }))
-
 //const EmployeeModel=require('../models/EmployeeModel.model')
-const emp=require('../controllers/EmployeeController.controller')
+const emp=require('../controllers/signUpController.controller')
 
 
 signupRoute.post('/',emp.saveEmployee)

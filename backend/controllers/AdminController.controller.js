@@ -1,11 +1,10 @@
-const express=require("express")
 const mongoose=require("mongoose")
 const EmployeeModel=require("../models/EmployeeModel.model")
 
 async function getAllHR(req,res){
     const emp=await EmployeeModel.find({role:"hr"});
     if(!emp){
-        res.status(404).send({message:"Error finding HR"})
+       return res.status(404).send({message:"Error finding HR"})
     }
     else
         res.status(200).send(emp)
@@ -17,11 +16,11 @@ async function updateHR(req,res){
     //const e=await EmployeeModel.find({empId:req.body.empId})
     const id=req.params.id;
     if(id!=req.body.empId && req.body.role!="hr")
-        res.send({message:"Details mis-match"})
+        return res.send({message:"Details mis-match"})
     const emp=EmployeeModel.findOne({empId:id})
     console.log(emp)
     if(!emp){
-        res.status(404).send({message:"HR with this id does not exist"})
+        return res.status(404).send({message:"HR with this id does not exist"})
     }
     else{
         const edit=await EmployeeModel.replaceOne({empId:id},req.body);
@@ -42,7 +41,7 @@ async function addHR(req,res){
     const id=req.body.empId
     const emp=await EmployeeModel.findOne({empId:id})
     if(emp){
-        res.status(404).send({message:"HR with this id already exists"})
+        return res.status(404).send({message:"HR with this id already exists"})
     }
     else{
         const emps=new EmployeeModel({email,password,empId,mobileNumber,department,role});
@@ -58,7 +57,7 @@ catch(err){
 async function deleteHR(req,res){
     const emp=await EmployeeModel.findOne({empId:req.params.id})
     if(!emp && emp.role!="hr"){
-        res.status(404).send('HR not found');
+        return res.status(404).send('HR not found');
     }
     else{
         const j=await EmployeeModel.deleteOne({empId:req.params.id});
