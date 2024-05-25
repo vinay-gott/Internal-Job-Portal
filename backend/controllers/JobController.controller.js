@@ -1,5 +1,7 @@
 const mongoose=require("mongoose")
 const JobModel=require("../models/JobModel.model")
+const DiscussionController=require("./DiscussionController.controller")
+const DiscussionModel = require("../models/DiscussionModel.model")
 
 const getJobs=async (req,res)=>{
 
@@ -26,10 +28,31 @@ async function getHomeJobs(req,res){
 async function jobEditData(req,res){
     const id=req.params.id;
     const job=await JobModel.findOne({_jobId:id});
+    const comment= await DiscussionModel.find({ _jobId: id });
+    
     if(!job)
         return res.status(404) .send({message:"Error finding job"})
-    else
-        res.status(200).send(job)
+   
+    else{
+        const comm = await DiscussionModel.findOne({ _jobId: req.params.id });
+        let j={}
+        if(!comm){
+             j={"job":job,"comment":'No comments found'}
+          // return res.status(404).send({ message:  });
+           
+          }
+          else
+          j={"job":job,"comment":comm}
+        //res.status(200).send(job)
+        
+    // res.render('job-edit', {
+    //      job,
+    //     comment,
+    //     // message: req.flash('success'),
+    //     // error: req.flash('error')
+    //   });
+    res.status(200).send(j)
+    }
 }
 
 async function jobEditSave(req,res){
@@ -52,6 +75,7 @@ async function jobSave(req,res){
     // console.log(req.body._jobId)
 
     const j=await JobModel.findOne({_jobId:req.body._jobId})
+    
     //console.log(j)
     if(j){
         return res.status(404).send({message :"Job with this id already exists"})
@@ -66,11 +90,16 @@ async function jobSave(req,res){
 async function jobDelete(req,res){
     //const j=await JobModel.find({})
     const job=await JobModel.findOne({_jobId:req.params.id})
+  
     if(!job){
         return res.status(404).send('Job not found');
     }
     else{
         const j=await JobModel.deleteOne({_jobId:req.params.id});
+        const comment= await DiscussionModel.findOne({ _jobId:req.params.id });
+        if(comment){
+            await DiscussionModel.deleteMany({ _jobId:req.params.id });
+        }
         console.log(j)
         res.status(200).send("Job deleted successfully")
     }
