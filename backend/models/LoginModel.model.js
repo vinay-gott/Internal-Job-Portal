@@ -7,8 +7,14 @@ const LoginSchema =mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    role: {
+        type: String,
+        enum: ['admin', 'employee'],
+        default: 'employee'
     }
 })
 
 const LoginModel=mongoose.model("login",LoginSchema)
 module.exports=LoginModel
+
