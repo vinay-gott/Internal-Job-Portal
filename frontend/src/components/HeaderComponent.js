@@ -21,7 +21,7 @@ function HeaderComponent() {
           <a class="nav-link active" aria-current="page" href="#" onClick={()=>{nav('/home')}}>Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="#" onClick={()=>{nav('/jobs')}}>Jobs</a>
+          <a class="nav-link active" href="#" onClick={()=>{nav('/job')}}>Jobs</a>
         </li>       
       </ul>
       <form class="d-flex" role="search">

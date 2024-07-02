@@ -5,6 +5,7 @@ import HomeComponent from './components/HomeComponent';
 import  LoginComponent  from './components/LoginComponent';
 import SignUpComponent from './components/SignUpComponent';
 import AllJobsComponent from './components/AllJobsComponent';
+import JobComponent  from './components/JobComponent';
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
             <Route path="/home" element={<HomeComponent/>} />
             <Route path="/login" element={<LoginComponent/>} />
             <Route path="/signup" element={<SignUpComponent/>} />
-            <Route path="/jobs" element={<AllJobsComponent/>} />
+            {/* <Route path="/jobs" element={<AllJobsComponent/>} /> */}
+            <Route path="/job" element={<JobComponent/>} />
           </Routes>
         </Router>
       </header>

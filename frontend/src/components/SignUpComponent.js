@@ -1,142 +1,166 @@
-import React from 'react'
+import React, { useState } from 'react';
+import axios from 'axios';
+
 
 const SignUpComponent = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    empId: '',
+    mobileNumber: '',
+    department: '',
+    role: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('http://localhost:3128/signup', formData);
+      console.log(response.data);
+      alert('New employee added successfully');
+      // Optionally reset form fields
+      setFormData({
+        email: '',
+        password: '',
+        empId: '',
+        mobileNumber: '',
+        department: '',
+        role: ''
+      });
+    } catch (error) {
+      console.error('Error adding new employee:', error);
+        if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.error('Server Error:', error.response.data);
+            alert(`Error 1: ${error.response.data.message}`);
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.error('Request Error:', error.request);
+            alert('Error 2: Request error, please try again later.');
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error('Error:', error.message);
+            alert('Error 3: Something went wrong, please try again later.');
+        }
+    }
+  };
+
   return (
     <>
-    <section class="h-100 bg-dark">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col">
-        <div class="card card-registration my-4">
-          <div class="row g-0">
-            <div class="col-xl-6 d-none d-xl-block">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
-                alt="Sample photo" class="img-fluid"
-                // style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" 
-                />
-            </div>
-            <div class="col-xl-6">
-              <div class="card-body p-md-5 text-black">
-                <h3 class="mb-5 text-uppercase">Create an Account</h3>
+      <section className="h-100 bg-dark">
+        <div className="container py-5 h-100">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className="col">
+              <div className="card card-registration my-4">
+                <div className="row g-0">
+                  <div className="col-xl-6 d-none d-xl-block">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                      alt="Sample photo" className="img-fluid" />
+                  </div>
+                  <div className="col-xl-6">
+                    <div className="card-body p-md-5 text-black">
+                      <h3 className="mb-5 text-uppercase">Create an Account</h3>
 
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <div data-mdb-input-init class="form-outline">
-                      <input type="text" id="form3Example1m" class="form-control form-control-lg" />
-                      <label class="form-label" for="form3Example1m">First name</label>
+                      <form onSubmit={handleSubmit}>
+                        <div className="form-outline mb-4">
+                          <input
+                            type="text"
+                            id="email"
+                            name="email"
+                            className="form-control form-control-lg"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                          />
+                          <label className="form-label" htmlFor="email">Email ID</label>
+                        </div>
+
+                        <div className="form-outline mb-4">
+                          <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            className="form-control form-control-lg"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                          />
+                          <label className="form-label" htmlFor="password">Password</label>
+                        </div>
+
+                        <div className="form-outline mb-4">
+                          <input
+                            type="text"
+                            id="empId"
+                            name="empId"
+                            className="form-control form-control-lg"
+                            value={formData.empId}
+                            onChange={handleChange}
+                            required
+                          />
+                          <label className="form-label" htmlFor="empId">Employee ID</label>
+                        </div>
+
+                        <div className="form-outline mb-4">
+                          <input
+                            type="text"
+                            id="mobileNumber"
+                            name="mobileNumber"
+                            className="form-control form-control-lg"
+                            value={formData.mobileNumber}
+                            onChange={handleChange}
+                            required
+                          />
+                          <label className="form-label" htmlFor="mobileNumber">Phone number</label>
+                        </div>
+
+                        <div className="form-outline mb-4">
+                          <input
+                            type="text"
+                            id="department"
+                            name="department"
+                            className="form-control form-control-lg"
+                            value={formData.department}
+                            onChange={handleChange}
+                            required
+                          />
+                          <label className="form-label" htmlFor="department">Department</label>
+                        </div>
+
+                        <div className="form-outline mb-4">
+                          <input
+                            type="text"
+                            id="role"
+                            name="role"
+                            className="form-control form-control-lg"
+                            value={formData.role}
+                            onChange={handleChange}
+                            required
+                          />
+                          <label className="form-label" htmlFor="role">Role</label>
+                        </div>
+
+                        <div className="d-flex justify-content-end pt-3">
+                          <button type="submit" className="btn btn-warning btn-lg ms-2">Submit form</button>
+                        </div>
+                      </form>
+
                     </div>
                   </div>
-                  <div class="col-md-6 mb-4">
-                    <div data-mdb-input-init class="form-outline">
-                      <input type="text" id="form3Example1n" class="form-control form-control-lg" />
-                      <label class="form-label" for="form3Example1n">Last name</label>
-                    </div>
-                  </div>
                 </div>
-
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <div data-mdb-input-init class="form-outline">
-                      <input type="text" id="form3Example1m1" class="form-control form-control-lg" />
-                      <label class="form-label" for="form3Example1m1">Mother's name</label>
-                    </div>
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <div data-mdb-input-init class="form-outline">
-                      <input type="text" id="form3Example1n1" class="form-control form-control-lg" />
-                      <label class="form-label" for="form3Example1n1">Father's name</label>
-                    </div>
-                  </div>
-                </div>
-
-                <div data-mdb-input-init class="form-outline mb-4">
-                  <input type="text" id="form3Example8" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example8">Address</label>
-                </div>
-
-                <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
-
-                  <h6 class="mb-0 me-4">Gender: </h6>
-
-                  <div class="form-check form-check-inline mb-0 me-4">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
-                      value="option1" />
-                    <label class="form-check-label" for="femaleGender">Female</label>
-                  </div>
-
-                  <div class="form-check form-check-inline mb-0 me-4">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
-                      value="option2" />
-                    <label class="form-check-label" for="maleGender">Male</label>
-                  </div>
-
-                  <div class="form-check form-check-inline mb-0">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="otherGender"
-                      value="option3" />
-                    <label class="form-check-label" for="otherGender">Other</label>
-                  </div>
-
-                </div>
-
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-
-                    <select data-mdb-select-init>
-                      <option value="1">State</option>
-                      <option value="2">Option 1</option>
-                      <option value="3">Option 2</option>
-                      <option value="4">Option 3</option>
-                    </select>
-
-                  </div>
-                  <div class="col-md-6 mb-4">
-
-                    <select data-mdb-select-init>
-                      <option value="1">City</option>
-                      <option value="2">Option 1</option>
-                      <option value="3">Option 2</option>
-                      <option value="4">Option 3</option>
-                    </select>
-
-                  </div>
-                </div>
-
-                <div data-mdb-input-init class="form-outline mb-4">
-                  <input type="text" id="form3Example9" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example9">DOB</label>
-                </div>
-
-                <div data-mdb-input-init class="form-outline mb-4">
-                  <input type="text" id="form3Example90" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example90">Pincode</label>
-                </div>
-
-                <div data-mdb-input-init class="form-outline mb-4">
-                  <input type="text" id="form3Example99" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example99">Course</label>
-                </div>
-
-                <div data-mdb-input-init class="form-outline mb-4">
-                  <input type="text" id="form3Example97" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example97">Email ID</label>
-                </div>
-
-                <div class="d-flex justify-content-end pt-3">
-                  <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-light btn-lg">Reset all</button>
-                  <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-warning btn-lg ms-2">Submit form</button>
-                </div>
-
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
     </>
-  )
-}
+  );
+};
 
-
-export default SignUpComponent
+export default SignUpComponent;
