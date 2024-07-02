@@ -14,7 +14,6 @@ const EmployeeSchema =mongoose.Schema({
         required:true
     },
     mobileNumber:{type:String},
-    department:{type:Boolean},
     role:{
         type:String,
         required:true,

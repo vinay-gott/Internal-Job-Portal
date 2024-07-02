@@ -3,40 +3,15 @@ const jwt=require("jsonwebtoken")
 //const LoginModel=require("../models/LoginModel.model")
 const EmployeeModel=require("../models/EmployeeModel.model")
 
-// async function checkUser(req,res){
-
-//     const {empId,password}=req.body;
-    
-//     if(!empId||!password){
-//         return res.status(404).send({message:"Pleas enter details"})
-//     }
-//     else{
-//     const emp=await EmployeeModel.findOne({empId:empId})
-    
-//     if(!emp)
-//         return res.status(404).send({message:"Employee does not exist"})
-//     else if(emp.password!=password)
-//         res.status(404).send({message :"Password is incorrect"})
-//     else{
-//          const payload = {
-//              emp: {
-//                 id: emp.empId,
-//                  role: emp.role
-//             }
-//           };
-//          const token = jwt.sign(payload, process.env.JWT_PVT_KEY);
-    
-//          res.header('auth-token', token).send({ token });
-
-//           // res.status(200).send("true");
-//         }   
-//     }
-// }/
 async function checkUser(req, res) {
-    const { empId, password } = req.body;
+    const { empId, password, userType } = req.body;
 
-    if (!empId || !password) {
-        return res.status(400).send({ message: "Please enter empId and password" });
+    if (!empId || !password || !userType) {
+        return res.status(400).send({ message: "Please enter empId, password, and userType" });
+    }
+
+    if (userType !== 'employee' && userType !== 'admin') {
+        return res.status(400).send({ message: "Invalid userType. Must be 'employee' or 'admin'" });
     }
 
     try {
@@ -50,6 +25,10 @@ async function checkUser(req, res) {
             return res.status(401).send({ message: "Password is incorrect" });
         }
 
+        if (emp.role !== userType) {
+            return res.status(403).send({ message: `Access denied. ${userType} login required` });
+        }
+
         const payload = {
             emp: {
                 id: emp.empId,
@@ -58,12 +37,13 @@ async function checkUser(req, res) {
         };
 
         const token = jwt.sign(payload, process.env.JWT_PVT_KEY);
-        res.header('auth-token', token).send({ token });
+        res.header('auth-token', token).send({ token, success: true });
 
     } catch (error) {
         console.error('Error in login:', error);
         res.status(500).send({ message: 'Server Error' });
     }
 }
+
 
 module.exports={checkUser}

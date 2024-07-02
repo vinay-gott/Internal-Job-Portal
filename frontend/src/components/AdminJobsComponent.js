@@ -1,14 +1,17 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import JobEditModal from './JobEditModal'; // Import the JobEditModal
 
-const JobComponent = () => {
+const AdminJobsComponent = () => {
   const [jobs, setJobs] = useState([]);
+  const [editJobId, setEditJobId] = useState(null);
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const response = await axios.get('http://localhost:3128/job/home');
-        console.log('Fetched jobs:', response.data); // Log fetched data
+        console.log('Fetched jobs:', response.data);
         setJobs(response.data);
       } catch (error) {
         console.error('Error fetching jobs:', error);
@@ -17,9 +20,24 @@ const JobComponent = () => {
     fetchJobs();
   }, []);
 
-  useEffect(() => {
-    console.log('Jobs state updated:', jobs); // Log state updates
-  }, [jobs]);
+  const handleEdit = (jobId) => {
+    setEditJobId(jobId); // Set the jobId to edit
+  };
+
+  const handleCloseEdit = () => {
+    setEditJobId(null); // Close the edit mode
+    fetchJobs(); // Fetch jobs again to update the list after editing
+  };
+
+  const fetchJobs = async () => {
+    try {
+      const response = await axios.get('http://localhost:3128/job/home');
+      console.log('Fetched jobs:', response.data);
+      setJobs(response.data);
+    } catch (error) {
+      console.error('Error fetching jobs:', error);
+    }
+  };
 
   return (
     <main>
@@ -39,15 +57,14 @@ const JobComponent = () => {
                 <div className="col" key={job._id}>
                   <div className="card shadow-sm">
                     <div className="card-body">
-                      <h5 className="card-title"><b>{job.jobTitle}</b></h5>
+                      <h5 className="card-title">{job.jobTitle}</h5>
                       <p className="card-text">{job.jobDesc}</p>
-                      <p className="card-text"><b>Job Type :</b> {job.jobType}</p>
-                      <p className="card-text"><b>Salary : </b>{job.salary}</p>
-                      <p className="card-text"><b>Location : </b>{job.jobLocation}</p>
+                      <p className="card-text">Location : {job.jobLocation}</p>
+                      <p className="card-text">Salary : {job.salary}</p>
+                      <p className="card-text">Job Type : {job.jobType}</p>
                       <div className="d-flex justify-content-between align-items-center">
                         <div className="btn-group">
-                          <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                          <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
+                          <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => handleEdit(job._id)}>Edit</button>
                         </div>
                       </div>
                     </div>
@@ -60,8 +77,17 @@ const JobComponent = () => {
           </div>
         </div>
       </div>
+
+      {/* Render JobEditModal if editJobId is set */}
+      {editJobId && (
+        <JobEditModal
+          jobId={editJobId}
+          initialFormData={{ jobTitle: '', jobLocation: '', jobType: '', jobDesc: '', salary: '' }}
+          onClose={handleCloseEdit}
+        />
+      )}
     </main>
   );
-}
+};
 
-export default JobComponent;
+export default AdminJobsComponent;

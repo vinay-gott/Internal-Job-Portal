@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const SignUpComponent = () => {
   const [formData, setFormData] = useState({
@@ -8,12 +8,17 @@ const SignUpComponent = () => {
     password: '',
     empId: '',
     mobileNumber: '',
-    department: '',
-    role: ''
+    role: 'employee' // Default role to 'employee'
   });
+
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleRoleChange = (e) => {
+    setFormData({ ...formData, role: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -23,31 +28,34 @@ const SignUpComponent = () => {
       const response = await axios.post('http://localhost:3128/signup', formData);
       console.log(response.data);
       alert('New employee added successfully');
+
       // Optionally reset form fields
       setFormData({
         email: '',
         password: '',
         empId: '',
         mobileNumber: '',
-        department: '',
-        role: ''
+        role: 'employee'
       });
+
+      // Navigate to login page
+      navigate('/login');
     } catch (error) {
       console.error('Error adding new employee:', error);
-        if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.error('Server Error:', error.response.data);
-            alert(`Error 1: ${error.response.data.message}`);
-        } else if (error.request) {
-            // The request was made but no response was received
-            console.error('Request Error:', error.request);
-            alert('Error 2: Request error, please try again later.');
-        } else {
-            // Something happened in setting up the request that triggered an Error
-            console.error('Error:', error.message);
-            alert('Error 3: Something went wrong, please try again later.');
-        }
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error('Server Error:', error.response.data);
+        alert(`Error 1: ${error.response.data.message}`);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('Request Error:', error.request);
+        alert('Error 2: Request error, please try again later.');
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error:', error.message);
+        alert('Error 3: Something went wrong, please try again later.');
+      }
     }
   };
 
@@ -121,29 +129,34 @@ const SignUpComponent = () => {
                         </div>
 
                         <div className="form-outline mb-4">
-                          <input
-                            type="text"
-                            id="department"
-                            name="department"
-                            className="form-control form-control-lg"
-                            value={formData.department}
-                            onChange={handleChange}
-                            required
-                          />
-                          <label className="form-label" htmlFor="department">Department</label>
-                        </div>
-
-                        <div className="form-outline mb-4">
-                          <input
-                            type="text"
-                            id="role"
-                            name="role"
-                            className="form-control form-control-lg"
-                            value={formData.role}
-                            onChange={handleChange}
-                            required
-                          />
-                          <label className="form-label" htmlFor="role">Role</label>
+                          <div className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="role"
+                              id="employeeRole"
+                              value="employee"
+                              checked={formData.role === 'employee'}
+                              onChange={handleRoleChange}
+                            />
+                            <label className="form-check-label" htmlFor="employeeRole">
+                              Employee
+                            </label>
+                          </div>
+                          <div className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="role"
+                              id="adminRole"
+                              value="admin"
+                              checked={formData.role === 'admin'}
+                              onChange={handleRoleChange}
+                            />
+                            <label className="form-check-label" htmlFor="adminRole">
+                              Admin
+                            </label>
+                          </div>
                         </div>
 
                         <div className="d-flex justify-content-end pt-3">
