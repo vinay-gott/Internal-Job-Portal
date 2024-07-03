@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import AdminJobsComponent from './AdminJobsComponent';
 
 const AdminDashboard = () => {
   return (
-      <AdminJobsComponent />
+      <div>
+        <h1> Admin page</h1>
+      </div>
   );
 };
 

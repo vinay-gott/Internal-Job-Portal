@@ -6,10 +6,12 @@ import  LoginComponent  from './components/LoginComponent';
 import SignUpComponent from './components/SignUpComponent';
 import AllJobsComponent from './components/AllJobsComponent';
 import JobComponent  from './components/JobComponent';
-import AdminJobsComponent from './components/AdminJobsComponent';
+import HRJobsComponent from './components/HRJobsComponent';
 import EmployeeJobsComponent from './components/EmployeeJobsComponent';
 import EmployeeDashboard from './components/EmployeeDashBoard.js';
-import AdminDashboard from './components/AdminDashboard';
+import HRDashboard from './components/HRDashboard';
+import AdminDashboard from './components/AdminDashboard.js';
+import AppliedJobsComponent from './components/AppliedJobsComponent.js';
 
 function App() {
   return (
@@ -23,10 +25,12 @@ function App() {
             <Route path="/signup" element={<SignUpComponent/>} />
             {/* <Route path="/jobs" element={<AllJobsComponent/>} /> */}
             <Route path="/job" element={<JobComponent/>} />
-            <Route path="/admin-job" element={<AdminJobsComponent/>} />
+            <Route path="/hr-job" element={<HRJobsComponent/>} />
             <Route path="/emp-job" element={<EmployeeJobsComponent/>} />
             <Route path="/employee-dashboard" element={<EmployeeDashboard/>} />
+            <Route path="/hr-dashboard" element={<HRDashboard/>} />
             <Route path="/admin-dashboard" element={<AdminDashboard/>} />
+            <Route path="/applied-jobs" element={<AppliedJobsComponent />} />
           </Routes>
         </Router>
       </header>

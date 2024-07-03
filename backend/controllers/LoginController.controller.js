@@ -10,7 +10,7 @@ async function checkUser(req, res) {
         return res.status(400).send({ message: "Please enter empId, password, and userType" });
     }
 
-    if (userType !== 'employee' && userType !== 'admin') {
+    if (userType !== 'employee' && userType !== 'hr' && userType!=='admin') {
         return res.status(400).send({ message: "Invalid userType. Must be 'employee' or 'admin'" });
     }
 

@@ -148,6 +148,20 @@ const SignUpComponent = () => {
                               className="form-check-input"
                               type="radio"
                               name="role"
+                              id="hrRole"
+                              value="hr"
+                              checked={formData.role === 'hr'}
+                              onChange={handleRoleChange}
+                            />
+                            <label className="form-check-label" htmlFor="hrRole">
+                              HR
+                            </label>
+                          </div>
+                          <div className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="role"
                               id="adminRole"
                               value="admin"
                               checked={formData.role === 'admin'}

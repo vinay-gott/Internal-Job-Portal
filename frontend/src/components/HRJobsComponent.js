@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import JobEditModal from './JobEditModal'; // Import the JobEditModal
 
-const AdminJobsComponent = () => {
+const HRJobsComponent = () => {
   const [jobs, setJobs] = useState([]);
   const [editJobId, setEditJobId] = useState(null);
 
@@ -90,4 +90,4 @@ const AdminJobsComponent = () => {
   );
 };
 
-export default AdminJobsComponent;
+export default HRJobsComponent;

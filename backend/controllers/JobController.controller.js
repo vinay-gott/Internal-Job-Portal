@@ -106,20 +106,22 @@ async function jobDelete(req,res){
     }
 }
 async function applyForJob(req, res) {
-    try {
-      const { jobId, empId } = req.body;
-      const appliedJob = new AppliedJobModel({
-        _jobId: jobId,
-        empId: empId,
-        appliedDate: new Date(),
-      });
-      await appliedJob.save();
-      res.status(200).send({ message: "Applied for job successfully" });
-    } catch (error) {
-      console.error("Error applying for job:", error);
-      res.status(500).send({ message: "Internal server error" });
-    }
+  try {
+    const { jobId, empId } = req.body;
+    const appliedJob = new AppliedJobModel({
+      jobId:jobId,
+      empId:empId,
+      appliedDate: new Date(),
+    });
+    await appliedJob.save();
+    res.status(200).send({ message: 'Applied for job successfully' });
+  } catch (error) {
+    console.error('Error applying for job:', error);
+    res.status(500).send({ message: 'Internal server error' });
   }
+}
+
+
 
   // Example backend controller function
 async function updateJob(req, res) {
@@ -143,6 +145,53 @@ async function updateJob(req, res) {
       res.status(500).json({ message: 'Internal server error' });
     }
   }
+  const getAppliedJobs = async (req, res) => {
+    try {
+      const { empId } = req.params;
+  
+      console.log(`Fetching applied jobs for empId: ${empId}`);
+  
+      // Find applied jobs for the given employee ID
+      const appliedJobs = await AppliedJobModel.find({ empId });
+      if (appliedJobs.length === 0) {
+        return res.status(404).send({ message: 'No applied jobs found' });
+      }
+  
+      console.log('Applied jobs:', appliedJobs);
+  
+      // Extract jobIds from appliedJobs
+      const jobIds = appliedJobs.map(job => job.jobId);
+  
+      // Use aggregation pipeline to fetch job details
+      const jobs = await JobModel.aggregate([
+        { 
+          $match: { 
+            jobId: { $in: jobIds } // Match documents where jobId is in the jobIds array
+          }
+        }
+      ]);
+  
+      console.log('Fetched jobs:', jobs);
+  
+      if (jobs.length === 0) {
+        return res.status(404).send({ message: 'No job details found for applied jobs' });
+      }
+  
+      // Send job details to the frontend
+      res.status(200).send(jobs);
+    } catch (error) {
+      console.error('Error fetching applied jobs:', error);
+      res.status(500).send({ message: 'Internal server error' });
+    }
+  };
+  
+  
+  
+  
+  
+  
+  
+    
   
 
-module.exports={getJobs,getHomeJobs,jobEditData,jobEditSave,jobSave,jobDelete,applyForJob,updateJob}
+module.exports={getJobs,getHomeJobs,jobEditData,jobEditSave,jobSave,jobDelete,applyForJob,updateJob,getAppliedJobs}

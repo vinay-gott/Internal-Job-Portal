@@ -19,9 +19,11 @@ const LoginComponent = () => {
             if (response.data.success) {
                 if (userType === 'employee') {
                     navigate('/employee-dashboard', { state: { empId } }); // Pass empId to employee-dashboard
-                } else if (userType === 'admin') {
-                  navigate('/admin-dashboard');
-                }
+                } else if (userType === 'hr') {
+                  navigate('/hr-dashboard');
+                }else if (userType === 'admin') {
+                    navigate('/admin-dashboard');
+                  }
                 alert('Login successful');
               } else {
                 alert('Invalid credentials');
@@ -89,6 +91,7 @@ const LoginComponent = () => {
                                     onChange={(e) => setUserType(e.target.value)}
                                 >
                                     <option value="employee">Employee</option>
+                                    <option value="hr">HR</option>
                                     <option value="admin">Admin</option>
                                 </select>
                             </div>

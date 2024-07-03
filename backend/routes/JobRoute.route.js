@@ -11,6 +11,7 @@ JobRoute.get("/home",jr.getHomeJobs)
 JobRoute.get("/home/:id",jr.jobEditData)
 JobRoute.post("/apply",jr.applyForJob)
 JobRoute.put("/edit/:jobId",jr.updateJob)
+JobRoute.get('/applied/:empId', jr.getAppliedJobs);
 
 module.exports=JobRoute
 
