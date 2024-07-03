@@ -1,16 +1,14 @@
 
-
 import React from 'react';
 import FooterComponent from './FooterComponent';
 import HeaderComponent from './HeaderComponent';
 import './HomeComponent.css'; // Import the CSS file
 import NavbarComponent from './NavBarComponent';
 
-function HomeComponent() {
+function HRHomeComponent() {
   return (
     <>
-      <HeaderComponent />
-      
+    <NavbarComponent userRole={'hr'}/>      
 
       <div className="hero-section text-center">
         <img className="logo mb-4" src="./logo1.jpeg" alt="" />
@@ -77,4 +75,4 @@ function HomeComponent() {
   );
 }
 
-export default HomeComponent;
+export default HRHomeComponent;

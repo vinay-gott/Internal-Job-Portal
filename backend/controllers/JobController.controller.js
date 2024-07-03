@@ -245,8 +245,38 @@ async function getEmpHR(req,res){
   }
 };
 
+async function viewEmp(req, res){
+  const { jobId } = req.params;
+  try {
+    console.log("reached 1");
+    const applications = await AppliedJobModel.find({ jobId });
+    console.log("reached 2");
+    console.log("applications: ",applications)
+    if (!applications.length) {
+      return res.status(404).json({ message: 'No applications found for this job' });
+    }
+    console.log("reached 3");
+
+    const empIds = applications.map(app => app.empId);
+    console.log("reached 4");
+    console.log("empid: ",empIds)
+
+
+    const employees = await EmployeeModel.find({ empId: { $in: empIds } });
+    console.log("reached 5");
+    console.log("emp: ",employees)
+
+
+
+    res.status(200).json(employees);
+    console.log("reached 6");
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 
 
 
-module.exports={getJobs,getHomeJobs,jobEditData,jobEditSave,jobSave,jobDelete,applyForJob,updateJob,getAppliedJobs,addJob,deleteJob,editJob,getEmpHR}
+module.exports={getJobs,getHomeJobs,jobEditData,jobEditSave,jobSave,jobDelete,applyForJob,updateJob,getAppliedJobs,addJob,deleteJob,editJob,getEmpHR,viewEmp}

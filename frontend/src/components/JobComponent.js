@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import NavbarComponent from './NavBarComponent';
+import HeaderComponent from './HeaderComponent';
 
 const JobComponent = () => {
   const [jobs, setJobs] = useState([]);
@@ -23,6 +25,7 @@ const JobComponent = () => {
 
   return (
     <main>
+      <HeaderComponent/>
       <section className="py-5 text-center container">
         <div className="row py-lg-5">
           <div className="col-lg-6 col-md-8 mx-auto">

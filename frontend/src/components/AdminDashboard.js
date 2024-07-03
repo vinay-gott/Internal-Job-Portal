@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import NavbarComponent from './NavBarComponent';
 
 const AdminDashboard = () => {
   const [employees, setEmployees] = useState([]);
@@ -27,6 +28,8 @@ const AdminDashboard = () => {
   }, []);
 
   return (
+    <>
+    <NavbarComponent/>
     <div className="container mt-5">
       <h1 className="text-center mb-4">Admin Dashboard</h1>
       
@@ -78,6 +81,7 @@ const AdminDashboard = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

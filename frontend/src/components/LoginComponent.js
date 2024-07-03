@@ -1,47 +1,46 @@
 
-import React, { useState } from 'react';
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import UserContext from './UserContext';
 
 const LoginComponent = () => {
-    const [empId, setEmpId] = useState('');
-    const [password, setPassword] = useState('');
-    const [userType, setUserType] = useState('employee'); // Default to employee
-    const navigate = useNavigate();
+  const [empId, setEmpId] = useState('');
+  const [password, setPassword] = useState('');
+  const [userType, setUserType] = useState('employee');
+  const navigate = useNavigate();
+  const { setEmpId: setContextEmpId } = useContext(UserContext);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            const response = await axios.post('http://localhost:3128/login', { empId, password, userType });
-            console.log(response.data);
-            if (response.data.success) {
-                if (userType === 'employee') {
-                    navigate('/employee-dashboard', { state: { empId } }); // Pass empId to employee-dashboard
-                } else if (userType === 'hr') {
-                  navigate('/hr-dashboard');
-                }else if (userType === 'admin') {
-                    navigate('/admin-dashboard');
-                  }
-                alert('Login successful');
-              } else {
-                alert('Invalid credentials');
-              }
-        } catch (error) {
-            console.error('Error logging in:', error);
-            if (error.response) {
-                console.error('Server Error:', error.response.data);
-                alert(`Error: ${error.response.data.message}`);
-            } else if (error.request) {
-                console.error('Request Error:', error.request);
-                alert('Request error, please try again later.');
-            } else {
-                console.error('Error:', error.message);
-                alert('Something went wrong, please try again later.');
-            }
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:3128/login', { empId, password, userType });
+      if (response.data.success) {
+        setContextEmpId(empId);
+        // if (userType === 'employee') {
+        // //   navigate('/employee-dashboard');
+        // navigate('/employee-dashboard', { state: { empId } });
+        // } else if (userType === 'hr') {
+        //   navigate('/hr-dashboard');
+        // } else if (userType === 'admin') {
+        //   navigate('/admin-dashboard');
+        // }
+        if (userType === 'employee') {
+            navigate('/employee-home');
+          } else if (userType === 'hr') {
+            navigate('/hr-home');
+          } else if (userType === 'admin') {
+            navigate('/admin-home');
+          }
+        alert('Login successful');
+      } else {
+        alert('Invalid credentials');
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+      alert('Failed to log in');
+    }
+  };
 
     return (
         <section className="vh-100">

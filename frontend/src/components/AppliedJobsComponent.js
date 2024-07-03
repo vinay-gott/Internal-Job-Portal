@@ -5,6 +5,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import NavbarComponent from './NavBarComponent';
+
 
 const AppliedJobsComponent = () => {
   const [appliedJobs, setAppliedJobs] = useState([]);
@@ -26,6 +28,8 @@ const AppliedJobsComponent = () => {
 
   return (
     <main>
+            <NavbarComponent userRole={'employee'}/>
+
       <section className="py-5 text-center container">
         <div className="row py-lg-5">
           <div className="col-lg-6 col-md-8 mx-auto">

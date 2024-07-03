@@ -10,7 +10,12 @@ function HeaderComponent() {
   return (
     <>
     <div>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <nav
+      className="navbar navbar-expand-md navbar-dark bg-dark"
+      style={{
+        position: 'sticky'
+      }}
+    >
   <div class="container-fluid">
   
     <a class="navbar-brand" href="#" onClick={()=>{nav('/home')}}>
