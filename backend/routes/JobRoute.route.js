@@ -18,6 +18,9 @@ JobRoute.delete('/delete/:jobId', jr.deleteJob);
 JobRoute.get('/details',jr.getEmpHR)
 JobRoute.get('/view/:jobId',jr.viewEmp)
 
+JobRoute.post('/approve',jr.approveJobApplication)
+JobRoute.post('/reject',jr.rejectJobApplication)
+
 module.exports=JobRoute
 
 

@@ -1,13 +1,15 @@
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const ViewApplicantsModal = ({ jobId, onClose }) => {
+const ViewApplicantsModal = ({ jobId, onClose, handleApprove, handleReject }) => {
   const [jobApplicants, setJobApplicants] = useState([]);
 
   useEffect(() => {
     const fetchJobApplicants = async () => {
       try {
         const response = await axios.get(`http://localhost:3128/job/view/${jobId}`);
+        console.log('Applicants fetched:', response.data); // Debugging: Log the applicants data
         setJobApplicants(response.data);
       } catch (error) {
         console.error('Error fetching job applicants:', error);
@@ -33,14 +35,28 @@ const ViewApplicantsModal = ({ jobId, onClose }) => {
                     <th>Employee ID</th>
                     <th>Email</th>
                     <th>Mobile Number</th>
+                    <th>Status</th>
+                    {/* <th>Actions</th> */}
                   </tr>
                 </thead>
                 <tbody>
                   {jobApplicants.map((applicant) => (
-                    <tr key={applicant._id}>
+                    <tr key={applicant.empId}>
                       <td>{applicant.empId}</td>
                       <td>{applicant.email}</td>
                       <td>{applicant.mobileNumber}</td>
+                      <td>
+                      <span>{applicant.status === 'approve' ? 'Approved' : 'Rejected'}</span></td> {/* Display the status */}
+                      <td>
+                        {applicant.status === 'pending' ? (
+                          <>
+                            <button className="btn btn-success" onClick={() => handleApprove(jobId, applicant.empId)}>Approve</button>
+                            <button className="btn btn-danger ms-2" onClick={() => handleReject(jobId, applicant.empId)}>Reject</button>
+                          </>
+                        ) : (null
+                          // <span>{applicant.status === 'approved' ? 'Approved' : 'Rejected'}</span>
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

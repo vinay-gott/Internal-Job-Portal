@@ -42,8 +42,8 @@ const EmployeeJobsComponent = ({ empId }) => {
     <main>
             <NavbarComponent userRole={'employee'}/>
 
-      <section className="py-5 text-center container">
-        <div className="row py-lg-5">
+      <section className="py-2 text-center container">
+        <div className="row py-lg-2">
           <div className="col-lg-6 col-md-8 mx-auto">
             <h1 className="fw-light">Available Jobs</h1>
             <p className="lead text-muted">Browse through the available job opportunities below.</p>
