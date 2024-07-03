@@ -46,7 +46,7 @@ const ViewApplicantsModal = ({ jobId, onClose, handleApprove, handleReject }) =>
                       <td>{applicant.email}</td>
                       <td>{applicant.mobileNumber}</td>
                       <td>
-                      <span>{applicant.status === 'approve' ? 'Approved' : 'Rejected'}</span></td> {/* Display the status */}
+                      <span>{applicant.status === 'approve' ? 'Approved' : applicant.status=='pending' ? 'Pending' : 'Rejected'}</span></td> {/* Display the status */}
                       <td>
                         {applicant.status === 'pending' ? (
                           <>
