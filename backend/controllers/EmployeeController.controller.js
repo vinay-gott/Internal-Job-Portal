@@ -84,4 +84,5 @@ async function deleteEmployee(req,res){
     }
 }
 
+
 module.exports={getEmployee,getEmployeeById,editEmployee,saveEmployee,deleteEmployee};

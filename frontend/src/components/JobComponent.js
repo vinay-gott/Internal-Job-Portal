@@ -44,12 +44,7 @@ const JobComponent = () => {
                       <p className="card-text"><b>Job Type :</b> {job.jobType}</p>
                       <p className="card-text"><b>Salary : </b>{job.salary}</p>
                       <p className="card-text"><b>Location : </b>{job.jobLocation}</p>
-                      <div className="d-flex justify-content-between align-items-center">
-                        <div className="btn-group">
-                          <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                          <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-                        </div>
-                      </div>
+                      
                     </div>
                   </div>
                 </div>

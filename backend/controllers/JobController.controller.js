@@ -3,6 +3,7 @@ const JobModel=require("../models/JobModel.model")
 const DiscussionController=require("./DiscussionController.controller")
 const DiscussionModel = require("../models/DiscussionModel.model")
 const AppliedJobModel = require("../models/AppliedJobModel.model"); // Import AppliedJobModel
+const EmployeeModel = require("../models/EmployeeModel.model")
 
 const getJobs=async (req,res)=>{
 
@@ -230,9 +231,22 @@ const deleteJob = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+async function getEmpHR(req,res){
+  try {
+    console.log("reached 1")
+    const employees = await EmployeeModel.find({ role: { $in: ['hr', 'employee'] } });
+    console.log("reached 2")
+
+    res.status(200).json(employees);
+    console.log("reached 3")
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 
 
 
 
-module.exports={getJobs,getHomeJobs,jobEditData,jobEditSave,jobSave,jobDelete,applyForJob,updateJob,getAppliedJobs,addJob,deleteJob,editJob}
+module.exports={getJobs,getHomeJobs,jobEditData,jobEditSave,jobSave,jobDelete,applyForJob,updateJob,getAppliedJobs,addJob,deleteJob,editJob,getEmpHR}
