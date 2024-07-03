@@ -184,14 +184,55 @@ async function updateJob(req, res) {
       res.status(500).send({ message: 'Internal server error' });
     }
   };
-  
-  
-  
-  
-  
-  
-  
-    
-  
+const addJob = async (req, res) => {
+  try {
+    console.log("reached 1");
+    const job = await JobModel.create(req.body);
+    console.log("reached 2");
+    res.status(201).json(job);
+    console.log("reached 3");
+  } catch (error) {
+    console.error('Error adding job:', error); // Log the error
+    res.status(400).json({ message: error.message });
+  }
+};
 
-module.exports={getJobs,getHomeJobs,jobEditData,jobEditSave,jobSave,jobDelete,applyForJob,updateJob,getAppliedJobs}
+
+// Edit a job
+const editJob = async (req, res) => {
+  const { jobId } = req.params;
+  try {
+    const updatedJob = await JobModel.findByIdAndUpdate(jobId, req.body, { new: true });
+    res.status(200).json(updatedJob);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+const deleteJob = async (req, res) => {
+  const { jobId } = req.params;
+  try {
+    console.log("reached 1");
+    console.log("jobId: ", jobId);
+
+    const deletedJob = await JobModel.findOneAndDelete({ jobId: jobId });
+    console.log("reached 2");
+
+    if (!deletedJob) {
+      console.log("Job not found");
+      return res.status(404).json({ message: 'Job not found' });
+    }
+
+    console.log("reached 3");
+    res.status(200).json({ message: 'Job deleted successfully', deletedJob });
+    console.log("reached 4");
+  } catch (error) {
+    console.error("Error deleting job:", error);
+    res.status(400).json({ message: error.message });
+  }
+};
+
+
+
+
+
+module.exports={getJobs,getHomeJobs,jobEditData,jobEditSave,jobSave,jobDelete,applyForJob,updateJob,getAppliedJobs,addJob,deleteJob,editJob}

@@ -13,6 +13,9 @@ JobRoute.post("/apply",jr.applyForJob)
 JobRoute.put("/edit/:jobId",jr.updateJob)
 JobRoute.get('/applied/:empId', jr.getAppliedJobs);
 
+JobRoute.post("/add",jr.addJob);
+JobRoute.delete('/delete/:jobId', jr.deleteJob);
+
 module.exports=JobRoute
 
 

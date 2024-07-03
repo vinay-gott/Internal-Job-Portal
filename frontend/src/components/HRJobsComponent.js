@@ -1,42 +1,47 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import JobEditModal from './JobEditModal'; // Import the JobEditModal
+import JobEditModal from './JobEditModal';
+import JobAddModal from './JobAddModal';
 
 const HRJobsComponent = () => {
   const [jobs, setJobs] = useState([]);
   const [editJobId, setEditJobId] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await axios.get('http://localhost:3128/job/home');
-        console.log('Fetched jobs:', response.data);
-        setJobs(response.data);
-      } catch (error) {
-        console.error('Error fetching jobs:', error);
-      }
-    };
     fetchJobs();
   }, []);
-
-  const handleEdit = (jobId) => {
-    setEditJobId(jobId); // Set the jobId to edit
-  };
-
-  const handleCloseEdit = () => {
-    setEditJobId(null); // Close the edit mode
-    fetchJobs(); // Fetch jobs again to update the list after editing
-  };
 
   const fetchJobs = async () => {
     try {
       const response = await axios.get('http://localhost:3128/job/home');
-      console.log('Fetched jobs:', response.data);
       setJobs(response.data);
     } catch (error) {
       console.error('Error fetching jobs:', error);
     }
+  };
+
+  const handleEdit = (jobId) => {
+    setEditJobId(jobId);
+  };
+
+  const handleDelete = async (jobId) => {
+    try {
+      await axios.delete(`http://localhost:3128/job/delete/${jobId}`);
+      fetchJobs(); // Update job list after deletion
+    } catch (error) {
+      console.error('Error deleting job:', error);
+    }
+  };
+
+  const handleAddJob = () => {
+    setShowAddModal(true);
+  };
+
+  const handleCloseAddModal = () => {
+    setShowAddModal(false);
+    fetchJobs(); // Update job list after adding new job
   };
 
   return (
@@ -45,6 +50,7 @@ const HRJobsComponent = () => {
         <div className="row py-lg-5">
           <div className="col-lg-6 col-md-8 mx-auto">
             <h1 className="fw-light">Available Jobs</h1>
+            <button className="btn btn-primary mb-3" onClick={handleAddJob}>Add New Job</button>
             <p className="lead text-muted">Browse through the available job opportunities below.</p>
           </div>
         </div>
@@ -65,6 +71,7 @@ const HRJobsComponent = () => {
                       <div className="d-flex justify-content-between align-items-center">
                         <div className="btn-group">
                           <button type="button" className="btn btn-sm btn-outline-secondary" onClick={() => handleEdit(job._id)}>Edit</button>
+                          <button type="button" className="btn btn-sm btn-outline-danger ms-2" onClick={() => handleDelete(job.jobId)}>Delete</button> {/* Changed job.jobId to job._id */}
                         </div>
                       </div>
                     </div>
@@ -78,13 +85,19 @@ const HRJobsComponent = () => {
         </div>
       </div>
 
-      {/* Render JobEditModal if editJobId is set */}
       {editJobId && (
         <JobEditModal
           jobId={editJobId}
           initialFormData={{ jobTitle: '', jobLocation: '', jobType: '', jobDesc: '', salary: '' }}
-          onClose={handleCloseEdit}
+          onClose={() => {
+            setEditJobId(null);
+            fetchJobs(); // Update job list after editing
+          }}
         />
+      )}
+
+      {showAddModal && (
+        <JobAddModal onClose={handleCloseAddModal} />
       )}
     </main>
   );
