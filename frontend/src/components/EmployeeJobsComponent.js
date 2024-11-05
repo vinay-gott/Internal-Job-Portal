@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import NavbarComponent from './NavBarComponent';
+import UserContext from './UserContext';
 
-const EmployeeJobsComponent = ({ empId }) => {
+const EmployeeJobsComponent = () => {
+  const location = useLocation();
+  const { empId: contextEmpId } = useContext(UserContext);
+  const empId = location.state?.empId || contextEmpId;
+
   const [jobs, setJobs] = useState([]);
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [filter, setFilter] = useState({
@@ -12,7 +17,6 @@ const EmployeeJobsComponent = ({ empId }) => {
     type: '',
     salaryRange: '' 
   });
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -27,15 +31,17 @@ const EmployeeJobsComponent = ({ empId }) => {
   }, []);
 
   useEffect(() => {
-    const fetchAppliedJobs = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3128/job/applied/${empId}`);
-        setAppliedJobs(response.data);
-      } catch (error) {
-        console.error('Error fetching applied jobs:', error);
-      }
-    };
-    fetchAppliedJobs();
+    if (empId) {
+      const fetchAppliedJobs = async () => {
+        try {
+          const response = await axios.get(`http://localhost:3128/job/applied/${empId}`);
+          setAppliedJobs(response.data);
+        } catch (error) {
+          console.error('Error fetching applied jobs:', error);
+        }
+      };
+      fetchAppliedJobs();
+    }
   }, [empId]);
 
   const applyForJob = async (jobId) => {
@@ -70,7 +76,6 @@ const EmployeeJobsComponent = ({ empId }) => {
     const isLocationMatch = job.jobLocation.toLowerCase().includes(filter.location.toLowerCase());
     const isTypeMatch = filter.type ? job.jobType.toLowerCase() === filter.type.toLowerCase() : true;
 
-    // Salary range filtering
     let isSalaryMatch = true;
     if (filter.salaryRange) {
       const salary = parseFloat(job.salary.replace(/[^\d.-]/g, '')); 
@@ -80,6 +85,10 @@ const EmployeeJobsComponent = ({ empId }) => {
 
     return isTitleMatch && isLocationMatch && isTypeMatch && isSalaryMatch;
   });
+
+  if (!empId) {
+    return <div>Error: No employee ID provided.</div>;
+  }
 
   return (
     <main>

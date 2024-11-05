@@ -20,6 +20,8 @@ async function applyForJob(req, res) {
       empId:empId,
       appliedDate: new Date(),
     });
+    console.log("\n\n\n empid(frontend): ",empId)
+    console.log("jobid:",jobId)
     await appliedJob.save();
     res.status(200).send({ message: 'Applied for job successfully' });
   } catch (error) {
