@@ -81,6 +81,7 @@ const AppliedJobsComponent = () => {
                       <p className="card-text text-muted mb-4">{job.jobDesc}</p>
 
                       <div className="mb-3">
+                        <p className="card-text"><strong>Job ID:</strong> {job.jobId}</p>
                         <p className="card-text"><strong>Location:</strong> {job.jobLocation}</p>
                         <p className="card-text"><strong>Salary:</strong> {job.salary}</p>
                         <p className="card-text"><strong>Job Type:</strong> {job.jobType}</p>
