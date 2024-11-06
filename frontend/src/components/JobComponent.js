@@ -19,7 +19,6 @@ const JobComponent = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Jobs state updated:', jobs); 
   }, [jobs]);
 
   return (

@@ -4,9 +4,13 @@ import FooterComponent from './FooterComponent';
 import './HomeComponent.css';
 import UserContext from './UserContext';
 import NavbarComponent from './NavBarComponent';
+import { useLocation } from 'react-router-dom';
 
 function HomePageComponent() {
-    const { userRole } = useContext(UserContext); 
+    const location = useLocation();
+    const { userRole: contextUserRole } = useContext(UserContext); 
+    let userRole = location.state?.userRole || contextUserRole || localStorage.getItem('userRole');
+
     return (
         <main>
         <NavbarComponent userRole={userRole}/>      

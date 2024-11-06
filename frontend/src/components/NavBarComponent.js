@@ -1,18 +1,33 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import UserContext from './UserContext';
+import { useLocation } from 'react-router-dom';
 
 const NavbarComponent = () => {
+
   const navigate = useNavigate();
-  const { empId, userRole } = useContext(UserContext); // Retrieve userRole from context
+  const location = useLocation();
+  const { empId: contextEmpId, userRole: contextUserRole } = useContext(UserContext);
+
+  const empId = location.state?.empId || contextEmpId || localStorage.getItem('empId');
+  const userRole = location.state?.userRole || contextUserRole || localStorage.getItem('userRole');
+
+  useEffect(() => {
+    if (contextEmpId && contextUserRole) {
+      localStorage.setItem('empId', empId);
+      localStorage.setItem('userRole', userRole);
+    }
+  }, [contextEmpId, contextUserRole]);
 
   const handleLogout = () => {
+    localStorage.removeItem('empId');
+    localStorage.removeItem('userRole');
     alert('Logged out');
     navigate('/home');
   };
 
   const handleHomeClick = () => {
-    navigate('/homepage',{ state: { userRole } })
+    navigate('/homepage', { state: { userRole } });
   };
 
   const handleJobsClick = () => {

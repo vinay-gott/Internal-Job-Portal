@@ -1,4 +1,3 @@
-// EmpEditModal.js
 import React from 'react';
 import ProfileEditComponent from './ProfileEditComponent';
 

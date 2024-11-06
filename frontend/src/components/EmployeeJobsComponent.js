@@ -3,11 +3,15 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import NavbarComponent from './NavBarComponent';
 import UserContext from './UserContext';
+import { useNavigate } from 'react-router-dom'; 
 
 const EmployeeJobsComponent = () => {
   const location = useLocation();
-  const { empId: contextEmpId } = useContext(UserContext);
-  const empId = location.state?.empId || contextEmpId;
+  const navigate = useNavigate();
+  const { empId: contextEmpId, userRole: contextUserRole } = useContext(UserContext); 
+
+  let empId = location.state?.empId || contextEmpId || localStorage.getItem('empId');
+  let userRole = location.state?.userRole || contextUserRole || localStorage.getItem('userRole');
 
   const [jobs, setJobs] = useState([]);
   const [appliedJobs, setAppliedJobs] = useState([]);
@@ -17,6 +21,16 @@ const EmployeeJobsComponent = () => {
     type: '',
     salaryRange: '' 
   });
+
+  useEffect(() => {
+    if (!empId) {
+      alert('Error: No employee ID provided. Please log in again.');
+      navigate('/login'); 
+    } else {
+      localStorage.setItem('empId', empId);
+      localStorage.setItem('userRole', userRole);
+    }
+  }, [empId, navigate]);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -54,7 +68,6 @@ const EmployeeJobsComponent = () => {
 
     try {
       const response = await axios.post('http://localhost:3128/job/apply', { jobId, empId });
-      console.log('Applied for job:', response.data);
       alert('Applied successfully!');
     } catch (error) {
       console.error('Error applying for job:', error);

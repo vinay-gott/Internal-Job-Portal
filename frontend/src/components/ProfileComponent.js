@@ -4,16 +4,30 @@ import UserContext from './UserContext';
 import NavbarComponent from './NavBarComponent';
 import axios from 'axios';
 import ProfileEditModal from './ProfileEditModal';
+import { useNavigate } from 'react-router-dom'; 
 
 const ProfileComponent = () => {
     const location = useLocation();
-    const { empId: contextEmpId, userRole } = useContext(UserContext); 
-    const empId = location.state?.empId || contextEmpId;
-    
+    const navigate = useNavigate();
+    const { empId: contextEmpId, userRole: contextUserRole } = useContext(UserContext); 
+
+    let empId = location.state?.empId || contextEmpId || localStorage.getItem('empId');
+    let userRole = location.state?.userRole || contextUserRole || localStorage.getItem('userRole');
+
     const [employeeDetails, setEmployeeDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    if (!empId) {
+      alert('Error: No employee ID provided. Please log in again.');
+      navigate('/login'); 
+    } else {
+      localStorage.setItem('empId', empId);
+      localStorage.setItem('userRole', userRole);
+    }
+  }, [empId, navigate]);
 
     useEffect(() => {
         const fetchEmployeeDetails = async () => {

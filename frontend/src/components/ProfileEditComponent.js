@@ -15,7 +15,6 @@ const EmpEditComponent = ({ employeeId, initialFormData, onClose }) => {
     e.preventDefault();
     try {
       const response = await axios.put(`http://localhost:3128/hr/empedit/${employeeId}`, formData);
-      console.log('Employee updated:', response.data);
       alert('Employee updated successfully!');
       onClose();
     } catch (error) {

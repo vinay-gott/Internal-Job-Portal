@@ -19,6 +19,7 @@ const LoginComponent = () => {
       if (response.data.success) {
         setContextEmpId(empId);
         setUserRole(userType); 
+        localStorage.setItem('userRole', userType);
         navigate('/homepage',{ state: { userType } })
         alert('Login successful');
       } else {

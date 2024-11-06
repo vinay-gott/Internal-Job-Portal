@@ -47,7 +47,6 @@ const ViewApplicantsModal = ({ jobId, onClose, handleApprove, handleReject }) =>
                 <h5>Select an applicant to view details:</h5>
                 <ul className="list-group">
                   {jobApplicants.map((applicant) => {
-                  console.log(applicant);
                   return(
                     
                     <li

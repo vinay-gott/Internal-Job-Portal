@@ -20,8 +20,6 @@ async function applyForJob(req, res) {
       empId:empId,
       appliedDate: new Date(),
     });
-    console.log("\n\n\n empid(frontend): ",empId)
-    console.log("jobid:",jobId)
     await appliedJob.save();
     res.status(200).send({ message: 'Applied for job successfully' });
   } catch (error) {
@@ -121,10 +119,8 @@ const addJob = async (req, res) => {
 const deleteJob = async (req, res) => {
   const { jobId } = req.params;
   try {
-    console.log("jobId: ", jobId);
     const deletedJob = await JobModel.findOneAndDelete({ jobId: jobId });
     if (!deletedJob) {
-      console.log("Job not found");
       return res.status(404).json({ message: 'Job not found' });
     }
     res.status(200).json({ message: 'Job deleted successfully', deletedJob });

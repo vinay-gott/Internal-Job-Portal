@@ -1,15 +1,28 @@
-
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import NavbarComponent from './NavBarComponent';
+import { useNavigate } from 'react-router-dom'; 
 import UserContext from './UserContext';
 
 const AppliedJobsComponent = () => {
   const [appliedJobs, setAppliedJobs] = useState([]);
   const location = useLocation();
-  const { empId: contextEmpId } = useContext(UserContext);
-  const empId = location.state?.empId || contextEmpId;
+  const navigate = useNavigate();
+  const { empId: contextEmpId, userRole: contextUserRole } = useContext(UserContext); 
+
+  let empId = location.state?.empId || contextEmpId || localStorage.getItem('empId');
+  let userRole = location.state?.userRole || contextUserRole || localStorage.getItem('userRole');
+
+  useEffect(() => {
+    if (!empId) {
+      alert('Error: No employee ID provided. Please log in again.');
+      navigate('/login'); 
+    } else {
+      localStorage.setItem('empId', empId);
+      localStorage.setItem('userRole', userRole);
+    }
+  }, [empId, navigate]);
 
   useEffect(() => {
     const fetchAppliedJobs = async () => {

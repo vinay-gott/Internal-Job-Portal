@@ -19,7 +19,6 @@ const JobEditComponent = ({ jobId, initialFormData, onClose }) => {
     e.preventDefault();
     try {
       const response = await axios.put(`http://localhost:3128/job/edit/${jobId}`, formData);
-      console.log('Job updated:', response.data);
       alert('Job updated successfully!');
       onClose(); 
     } catch (error) {

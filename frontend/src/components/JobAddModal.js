@@ -23,7 +23,6 @@ const JobAddModal = ({ onClose }) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3128/job/add', formData);
-      console.log('Job added:', response.data);
       alert('Job added successfully!');
       onClose(); 
     } catch (error) {

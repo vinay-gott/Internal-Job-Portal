@@ -29,7 +29,6 @@ const SignUpComponent = () => {
 
     try {
       const response = await axios.post('http://localhost:3128/signup', formData);
-      console.log(response.data);
       alert('New employee added successfully');
 
       setFormData({
