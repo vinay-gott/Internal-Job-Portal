@@ -114,6 +114,7 @@ const HRJobsComponent = () => {
                     <div className="card-body">
                       <h5 className="card-title">{job.jobTitle}</h5>
                       <p className="card-text">{job.jobDesc}</p>
+                      <p className="card-text">Job ID : {job.jobId}</p>
                       <p className="card-text">Location : {job.jobLocation}</p>
                       <p className="card-text">Salary : {job.salary}</p>
                       <p className="card-text">Job Type : {job.jobType}</p>

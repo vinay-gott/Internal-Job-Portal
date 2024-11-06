@@ -42,6 +42,7 @@ const JobComponent = () => {
                     <div className="card-body">
                       <h5 className="card-title"><b>{job.jobTitle}</b></h5>
                       <p className="card-text">{job.jobDesc}</p>
+                      <p className="card-text">Job ID : {job.jobId}</p>
                       <p className="card-text"><b>Job Type :</b> {job.jobType}</p>
                       <p className="card-text"><b>Salary : </b>{job.salary}</p>
                       <p className="card-text"><b>Location : </b>{job.jobLocation}</p>
